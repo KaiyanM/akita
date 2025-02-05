@@ -25,7 +25,7 @@
 <body>
 
     <nav id="navbar" class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">AkitaRTM Test</a>
+        <a class="navbar-brand" href="/">AkitaRTM Test1</a>
 
         <button id="toggle-button" class="btn btn-danger stop-run-btn" type="button">
             <span id="button-text">Stop</span>
@@ -79,7 +79,7 @@
                 button.classList.add("btn-success"); // Change to green when running
                 
                 // Send request to backend to start/continue the process
-                fetch('/api/start', {
+                fetch('/api/continue', {
                     method: 'POST',
                 })
                 .then(response => response.json())
@@ -96,7 +96,7 @@
                 button.classList.add("btn-danger"); // Change back to red when stopped
                 
                 // Send request to backend to stop the process
-                fetch('/api/stop', {
+                fetch('/api/pause', {
                 method: 'POST',
                 })
                 .then(response => response.json())

@@ -142,8 +142,8 @@ func (m *Monitor) StartServer() {
 
 	fs := web.GetAssets()
 	fServer := http.FileServer(fs)
-	r.HandleFunc("/api/pause", m.pauseEngine)
-	r.HandleFunc("/api/continue", m.continueEngine)
+	r.HandleFunc("/api/pause", m.pauseEngine).Methods("POST")
+	r.HandleFunc("/api/continue", m.continueEngine).Methods("POST")
 	r.HandleFunc("/api/now", m.now)
 	r.HandleFunc("/api/run", m.run)
 	r.HandleFunc("/api/tick/{name}", m.tick)
