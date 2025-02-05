@@ -179,14 +179,18 @@ func (m *Monitor) StartServer() {
 
 func (m *Monitor) pauseEngine(w http.ResponseWriter, _ *http.Request) {
 	m.engine.Pause()
-	_, err := w.Write([]byte("Simulation Paused"))
-	dieOnErr(err)
+    // Respond with JSON
+    response := map[string]string{"message": "Simulation Paused"}
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
 }
 
 func (m *Monitor) continueEngine(w http.ResponseWriter, _ *http.Request) {
 	m.engine.Continue()
-	_, err := w.Write([]byte("Simulation Resumed"))
-	dieOnErr(err)
+    // Respond with JSON
+    response := map[string]string{"message": "Simulation Resumed"}
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
 }
 
 func (m *Monitor) now(w http.ResponseWriter, _ *http.Request) {

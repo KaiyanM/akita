@@ -78,24 +78,8 @@
                 button.classList.remove("btn-danger"); 
                 button.classList.add("btn-success"); // Change to green when running
                 
-                // Send request to backend to start/continue the process
-                fetch('/api/continue', {
-                    method: 'POST',
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Program started:', data);
-                })
-                .catch(error => {
-                    console.error('Error starting the program:', error);
-                });
-
-            } else {
-                textSpan.textContent = "Stop";
-                button.classList.remove("btn-success");
-                button.classList.add("btn-danger"); // Change back to red when stopped
                 
-                // Send request to backend to stop the process
+                // Send request to backend to start/continue the process
                 fetch('/api/pause', {
                 method: 'POST',
                 })
@@ -105,6 +89,23 @@
                 })
                 .catch(error => {
                     console.error('Error stopping the program:', error);
+                });
+
+            } else {
+                textSpan.textContent = "Stop";
+                button.classList.remove("btn-success");
+                button.classList.add("btn-danger"); // Change back to red when stopped
+                
+                // Send request to backend to stop the process
+                fetch('/api/continue', {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Program started:', data);
+                })
+                .catch(error => {
+                    console.error('Error starting the program:', error);
                 });
             }
         });
