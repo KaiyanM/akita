@@ -179,13 +179,13 @@ func (m *Monitor) StartServer() {
 
 func (m *Monitor) pauseEngine(w http.ResponseWriter, _ *http.Request) {
 	m.engine.Pause()
-	_, err := w.Write(nil)
+	_, err := w.Write([]byte("Simulation Paused"))
 	dieOnErr(err)
 }
 
 func (m *Monitor) continueEngine(w http.ResponseWriter, _ *http.Request) {
 	m.engine.Continue()
-	_, err := w.Write(nil)
+	_, err := w.Write([]byte("Simulation Resumed"))
 	dieOnErr(err)
 }
 

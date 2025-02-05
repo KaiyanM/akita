@@ -1,13 +1,33 @@
 <!DOCTYPE html>
-<header>
+
+<head>
     <meta charset="UTF-8">
     <title>Akita Monitoring Tool</title>
-</header>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <style>
+        /* Make the button circular */
+        .stop-run-btn {
+            width: 80px; 
+            height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
+</head>
 
 <body>
 
     <nav id="navbar" class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">AkitaRTM</a>
+        <a class="navbar-brand" href="/">AkitaRTM Test</a>
+
+        <button id="toggle-button" class="btn btn-danger stop-run-btn" type="button">
+            <span id="button-text">Stop</span>
+        </button>
 
         <div class="btn-toolbar my-2 my-lg-0">
             <div class="btn-group me-3 ms-3" role="group">
@@ -45,6 +65,49 @@
             </div>
         </div>
     </nav>
+
+    <script>
+        document.getElementById("toggle-button").addEventListener("click", function () {
+            let button = this;
+            let textSpan = document.getElementById("button-text");
+
+            if (textSpan.textContent === "Stop") {
+                textSpan.textContent = "Run";
+                button.classList.remove("btn-danger"); 
+                button.classList.add("btn-success"); // Change to green when running
+                
+                // Send request to backend to start/continue the process
+                fetch('/api/start', {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Program started:', data);
+                })
+                .catch(error => {
+                    console.error('Error starting the program:', error);
+                });
+
+            } else {
+                textSpan.textContent = "Stop";
+                button.classList.remove("btn-success");
+                button.classList.add("btn-danger"); // Change back to red when stopped
+                
+                // Send request to backend to stop the process
+                fetch('/api/stop', {
+                method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Program stopped:', data);
+                })
+                .catch(error => {
+                    console.error('Error stopping the program:', error);
+                });
+            }
+        });
+    </script>
+
 
     <div id="debug-tool-container" class="main-container">
         <div id="left-pane" class="horizontal-block horizontal-container">
